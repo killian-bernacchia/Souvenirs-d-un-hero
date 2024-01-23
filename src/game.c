@@ -2,16 +2,19 @@
 #include <stdio.h>
 #include <stdio.h>
 
-State previous_state = STATE_HOME;
+State previous_state = STATE_END_GAME;
 State state = STATE_HOME;
 State next_state = STATE_HOME;
 bool game_over = false;
+
+Music current_music;
 
 void game(void)
 {
     switch (state)
     {
     case STATE_HOME:
+        previous_state = state;
         next_state = UpdateHome();
 
         if(next_state!=state)

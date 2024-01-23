@@ -14,8 +14,13 @@ int main()
     // Initialization
     //--------------------------------------------------------------------------------------
 	int fps = 0;
-    InitWindow(screenWidth, screenHeight, "raylib");
+    InitWindow(screenWidth, screenHeight, "Souvenirs d'un héro");
+
     InitAudioDevice();              // Initialize audio device
+
+    
+
+
 
     SetTargetFPS(fps); 
     SetExitKey(0);              
@@ -35,6 +40,7 @@ int main()
         //----------------------------------------------------------------------------------
         
         game();
+        
     }
 
     // De-Initialization
