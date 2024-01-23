@@ -6,26 +6,26 @@
 #include "settings.h"
 #include "end_game.h"
 
-static enum{stat_home, stat_menu, stat_settings, stat_end_game} stat=stat_home;
+State state = STATE_HOME;
 
 void game(void)
 {
 
-    switch (stat)
+    switch (state)
     {
-    case stat_home:
+    case STATE_HOME:
         home();
         break;
 
-    case stat_menu:
+    case STATE_MENU:
         menu();
         break;
 
-    case stat_settings:
+    case STATE_SETTINGS:
         settings();
         break;
 
-    case stat_end_game:
+    case STATE_END_GAME:
         end_game();
         break;
     
