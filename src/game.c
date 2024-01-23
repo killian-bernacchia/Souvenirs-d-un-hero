@@ -5,6 +5,7 @@
 State previous_state = STATE_HOME;
 State state = STATE_HOME;
 State next_state = STATE_HOME;
+bool game_over = false;
 
 void game(void)
 {
@@ -39,9 +40,24 @@ void game(void)
         DrawSettings();
         printf("set");
         break;
+    
+    case STATE_GAMEPLAY:
+        next_state = UpdateGameplay();
+
+        if(next_state!=state)
+            break;
+
+        DrawGameplay();
+        printf("game");
+        break;
 
     case STATE_END_GAME:
-        end_game();
+        next_state = UpdateEndGame();
+
+        if(next_state!=state)
+            break;
+
+        DrawEndGame();
         printf("end");
         break;
     
