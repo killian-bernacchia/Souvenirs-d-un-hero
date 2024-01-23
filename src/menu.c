@@ -1,7 +1,6 @@
 #include "menu.h"
 #include <stdio.h>
 #include "raylib.h"
-
 Rectangle settings_btn = {426, 144, 446, 144};
 Rectangle play_btn = {426, 432, 446, 144};
 Rectangle home_btn = {10, 10, 124, 124};

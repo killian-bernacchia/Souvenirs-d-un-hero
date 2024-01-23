@@ -6,7 +6,7 @@ int main()
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-	
+	int fps = 0;
     InitWindow(screenWidth, screenHeight, "raylib");
     InitAudioDevice();              // Initialize audio device
 
@@ -16,7 +16,7 @@ int main()
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
-    {
+    {  
         // Update
         //----------------------------------------------------------------------------------
         

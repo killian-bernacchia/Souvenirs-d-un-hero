@@ -23,7 +23,8 @@ void game(void)
         break;
 
     case STATE_SETTINGS:
-        settings();
+        next_state = UpdateSettings();
+        DrawSettings();
         printf("set");
         break;
 

@@ -17,11 +17,13 @@ extern void DrawHome(void);
 
 //MENU
 extern void menu(void);
-void DrawMenu(void);
-State UpdateMenu(void);
+extern void DrawMenu(void);
+extern State UpdateMenu(void);
 
 //SETTINGS
-extern void settings(void);
+
+extern State  UpdateSettings();
+extern void DrawSettings();
 
 //END_GAME
 extern void end_game(void);
