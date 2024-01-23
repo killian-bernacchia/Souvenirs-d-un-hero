@@ -2,6 +2,13 @@
 #include "global.h"
 #include "game.h"
 
+const int screenHeight = 720;
+const int screenWidth = 1280;
+int  fps = 0;
+float volumeMusique = 0.9f;
+float volumeDialogue = 0.9f;
+
+
 int main() 
 {
     // Initialization
