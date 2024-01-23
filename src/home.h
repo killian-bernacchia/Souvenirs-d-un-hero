@@ -1,6 +1,7 @@
 #ifndef HOME_H
 #define HOME_H
+#include "game.h"
 
-void home(void);
+State UpdateHome(void);
 
 #endif
