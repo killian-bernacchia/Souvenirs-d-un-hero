@@ -1,2 +1,4 @@
 main
 obj/*
+*.exe
+./.vscode/tasks.json

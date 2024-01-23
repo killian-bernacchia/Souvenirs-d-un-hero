@@ -3,6 +3,7 @@
 
 const int screenHeight = 720;
 const int screenWidth = 1280;
-int fps = 0;
-
+extern int  fps ;
+float volumeMusique = 0;
+float volumeDialogue = 0;
 #endif
