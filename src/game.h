@@ -22,8 +22,8 @@ extern State UpdateMenu(void);
 
 //SETTINGS
 
-extern State  UpdateSettings();
-extern void DrawSettings();
+extern State  UpdateSettings(void);
+extern void DrawSettings(void);
 
 //END_GAME
 extern void end_game(void);
