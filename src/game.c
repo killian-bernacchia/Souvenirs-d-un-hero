@@ -1,5 +1,6 @@
 #include "game.h"
 #include <stdio.h>
+#include <stdio.h>
 
 State previous_state = STATE_HOME;
 State state = STATE_MENU;

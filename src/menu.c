@@ -1,12 +1,15 @@
 #include "menu.h"
 #include <stdio.h>
+#include "raylib.h"
 
 Rectangle settings_btn = {426, 144, 446, 144};
 Rectangle play_btn = {426, 432, 446, 144};
 Rectangle home_btn = {10, 10, 124, 124};
 
+
 void DrawMenu(void)
 {
+    
     BeginDrawing();
         ClearBackground(WHITE);
 
@@ -18,16 +21,15 @@ void DrawMenu(void)
 
         DrawRectangleRec(play_btn, BLACK);
         DrawText("Play", 474, 480, 48, WHITE);
-
-
         
     EndDrawing();
 }
 
-State UpdateMenu(void){
-    Vector2 mouse;
-
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+State UpdateMenu(void)
+{
+    Vector2 mouse;    
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    {
         mouse.x = GetMouseX();
         mouse.y = GetMouseY();
 
