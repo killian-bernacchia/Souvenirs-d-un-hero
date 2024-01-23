@@ -2,4 +2,6 @@
 #define CINEMATICS_H
 
 
+extern void cinematics(void);
+
 #endif
