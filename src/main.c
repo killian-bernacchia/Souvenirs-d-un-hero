@@ -9,7 +9,7 @@ int main()
 	
     InitWindow(screenWidth, screenHeight, "raylib");
 
-    SetTargetFPS(140);               // Set our game to run at 60 frames-per-second
+    SetTargetFPS(fps);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
     // Main game loop

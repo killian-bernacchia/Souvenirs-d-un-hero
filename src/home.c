@@ -1,6 +1,15 @@
 #include "home.h"
+#include "raylib.h"
 
-void home(void)
+State UpdateHome(void)
 {
-    return;
+    return STATE_HOME;
+}
+
+extern void DrawHome(void)
+{
+    BeginDrawing();
+        DrawFPS(10, 10);
+        ClearBackground(RAYWHITE);
+    EndDrawing();
 }

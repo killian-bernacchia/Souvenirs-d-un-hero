@@ -1,20 +1,17 @@
 #include "raylib.h"
 #include "game.h"
-#include "home.h"
-#include "menu.h"
-#include "map.h"
-#include "settings.h"
-#include "end_game.h"
 
+State previous_state = STATE_HOME;
 State state = STATE_HOME;
+State next_state = STATE_HOME;
 
 void game(void)
 {
-
     switch (state)
     {
     case STATE_HOME:
-        home();
+        next_state = UpdateHome();
+        DrawHome();
         break;
 
     case STATE_MENU:
@@ -32,14 +29,6 @@ void game(void)
     default:
         break;
     }
-
-
+    previous_state = state;
+    state = next_state;
 }
-
-// void DrawGame(void){
-
-//     BeginDrawing();
-//         DrawMap();
-//     EndDrawing();
-
-// }
