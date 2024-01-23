@@ -1,8 +1,9 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-const int screenHeight = 720;
-const int screenWidth = 1280;
-int fps = 0;
-
+extern const int screenHeight;
+extern const int screenWidth;
+extern int  fps ;
+extern float volumeMusique;
+extern float volumeDialogue;
 #endif

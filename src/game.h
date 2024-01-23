@@ -6,7 +6,6 @@
 //type
 typedef enum State {STATE_HOME, STATE_MENU, STATE_SETTINGS, STATE_GAMEPLAY, STATE_END_GAME} State;
 
-
 //GAME
 extern void game(void);
 
@@ -17,14 +16,21 @@ extern void DrawHome(void);
 
 //MENU
 extern void menu(void);
-void DrawMenu(void);
-State UpdateMenu(void);
+extern void DrawMenu(void);
+extern State UpdateMenu(void);
 
 //SETTINGS
-extern void settings(void);
+extern State  UpdateSettings(void);
+extern void DrawSettings(void);
+
+//GAMEPLAY
+extern State UpdateGameplay(void);
+extern void DrawGameplay(void);
 
 //END_GAME
 extern void end_game(void);
+
+extern bool game_over;
 
 
 #endif
