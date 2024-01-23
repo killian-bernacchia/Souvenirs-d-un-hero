@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 State previous_state = STATE_HOME;
-State state = STATE_MENU;
+State state = STATE_HOME;
 State next_state = STATE_HOME;
 
 void game(void)
