@@ -23,7 +23,7 @@ int main()
 
     SetExitKey(0);              
 
-    current_music = LoadMusicStream("resources/Sound_fond.mp3");
+    current_music = LoadMusicStream("resources/eq2-pantheon.wav");
     PlayMusicStream(current_music);
 
     // Main game loop

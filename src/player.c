@@ -1,6 +1,8 @@
 #include "raylib.h"
 #include "player.h"
+#include "stdio.h"
 #include <math.h>
+#include <stdlib.h>
 
 #define GRAVITY 38.0f   //pixels per second per second
 #define JUMP_SPD 8.0f
@@ -9,12 +11,15 @@
 #define MAX_SPEED 20.0f
 
 Texture2D playerTexture;
+Texture2D playerGreyTexture;
 Texture2D memoryTexture;
 
 Memory *memories;
 
 void LoadPlayer(Player *player)
 {
+    playerTexture = LoadTexture("resources/feu_follet_frame1.png");
+    playerGreyTexture = LoadTexture("resources/feu_follet_gris.png");
     player->position = (Vector2){ 0,0 };
     player->speed = (Speed){ 0, 0 };
     player->camera = (Camera2D){ 0 };
@@ -22,9 +27,9 @@ void LoadPlayer(Player *player)
     player->camera.offset = (Vector2){ screenWidth/2, screenHeight/2 };
     player->camera.rotation = 0.0f;
     player->camera.zoom = 1.0f;
-    player->life = 30.0f;
+    player->life = 45.0f;
     player->scale = 0.1f;
-    player->texture = LoadTexture("resources/feu_follet_frame1.png");
+    player->texture = playerTexture;
     player->hitbox = (Rectangle){ 0 };
     player->hitbox.x = -player->texture.width*player->scale/2;
     player->hitbox.y = -player->texture.height*player->scale/2;
@@ -36,6 +41,7 @@ void LoadPlayer(Player *player)
     for(int id = 0; id < memoriesCount; id++)
     {
         memories[id].position = memoriesPositions[id];
+        printf("%i %i\n", (int)memories[id].position.x, (int)memories[id].position.y);
         memories[id].texture = memoryTexture;
         memories[id].scale = 0.1f;
         memories[id].hitbox = (Rectangle){ 0 };
@@ -51,6 +57,7 @@ void LoadPlayer(Player *player)
 void UnloadPlayer(Player *player)
 {
     UnloadTexture(player->texture);
+    UnloadTexture(memoryTexture);
     free(memories);
 }
 
@@ -59,13 +66,19 @@ void DrawPlayer(Player *player)
     Vector2 position = player->position;
     position.x -= player->scale*player->texture.width/2;
     position.y -= player->scale*player->texture.height/2 + cosf(GetTime()*2*PI*0.4f)*7.0f - 6.0f;
+
+    float fade = 255*player->life/30.0f + 10.0f;
+    if(fade > 254.9f) fade = 254.9f;
+    printf("fade : %f\n", fade);
+    Color fadeColor = (Color){ 255, 255, 255, (int)fade };
     BeginMode2D(player->camera);
-        DrawTextureEx(player->texture, position, 0.0f, player->scale, WHITE);
+        DrawTextureEx(playerGreyTexture, position, 0.0f, player->scale, WHITE);
+        DrawTextureEx(player->texture, position, 0.0f, player->scale, fadeColor);
     EndMode2D();
 
     for(int id = 0; id < memoriesCount; id++)
     {
-        if(!memories[id].isAlive) continue;
+        if(! memories[id].isAlive) continue;
         Vector2 position = memories[id].position;
         position.x -= memories[id].scale*memories[id].texture.width/2;
         position.y -= memories[id].scale*memories[id].texture.height/2 + cosf(GetTime()*2*PI*memories[id].puls)*4.0f;
@@ -77,11 +90,11 @@ void DrawPlayer(Player *player)
 
 void UpdateSpeed(Player *player, Seconds delta)
 {
-    if(IsKeyDown(KEY_LEFT))
+    if(IsKeyDown(KEY_A))
     {
         player->speed.x = -MOUV_SPD*delta;
     }
-    else if(IsKeyDown(KEY_RIGHT))
+    else if(IsKeyDown(KEY_D))
     {
         player->speed.x = MOUV_SPD*delta;
     }
@@ -91,14 +104,16 @@ void UpdateSpeed(Player *player, Seconds delta)
     }
     player->speed.y += GRAVITY*delta/TIME_FACTOR;
 
-    if(IsKeyDown(KEY_UP))
+    /*
+    if(IsKeyDown(KEY_W))
     {
         player->speed.y = -MOUV_SPD*delta;
     }
-    else if(IsKeyDown(KEY_DOWN))
+    else if(IsKeyDown(KEY_S))
     {
         player->speed.y = MOUV_SPD*delta;
     }
+    */
 
     if(player->speed.x > MAX_SPEED)
     {
@@ -187,6 +202,7 @@ void CheckCollision(Player *player)
         playerHitbox.height = player->hitbox.height;
         if(CheckCollisionRecs(playerHitbox, memoryHitbox))
         {
+            printf("Memory %i collected\n", id);
             memories[id].isAlive = false;
             player->life += 10.0f;
         }
@@ -207,6 +223,11 @@ void UpdatePlayerCamera(Player *player)
 
 void UpdatePlayer(Player *player, Seconds delta)
 {
+    player->life -= delta;
+    if(player->life <= 0.0f)
+    {
+        player->life = 0.0f;
+    }
     delta *= TIME_FACTOR;
     UpdateSpeed(player, delta);
     UpdatePosition(player, delta);

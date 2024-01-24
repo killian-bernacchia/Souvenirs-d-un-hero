@@ -54,7 +54,7 @@ State UpdateGameplay(void)
         return STATE_END_GAME;
     if(exitGamePlay)
         return STATE_MENU;
-    if(IsKeyReleased(KEY_P))
+    if(IsKeyReleased(KEY_ESCAPE))
         return STATE_PAUSE;
     
     return STATE_GAMEPLAY;
