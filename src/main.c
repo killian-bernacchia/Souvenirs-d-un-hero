@@ -1,6 +1,8 @@
 #include "raylib.h"
 #include "global.h"
 #include "game.h"
+#include "parallax.h"
+
 
 const int screenHeight = 720;
 const int screenWidth = 1280;
@@ -18,9 +20,8 @@ int main()
 
     InitAudioDevice();              // Initialize audio device
 
-    
-
-
+    //Initialise parallax
+    InitParallax();
 
     SetTargetFPS(fps); 
     SetExitKey(0);
@@ -44,8 +45,11 @@ int main()
     // De-Initialization
     //--------------------------------------------------------------------------------------
     CloseAudioDevice();
+    CloseParallax();
     CloseWindow();        // Close window and OpenGL context
+    
     //--------------------------------------------------------------------------------------
+
 
     return 0;
 }
