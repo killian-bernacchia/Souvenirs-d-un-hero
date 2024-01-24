@@ -11,8 +11,8 @@ Rectangle SoundMusiqueValue = {0};
 Rectangle SoundEffect = {0};
 Rectangle SoundEffectValue = {0};
 Rectangle MenuBoutton = {10, 10, 124, 124};
- int pourcentageFps;
- int valeurDeDepart;
+int pourcentageFps;
+int valeurDeDepart;
 void DrawSettings(void)
 {
     BeginDrawing();
@@ -58,10 +58,10 @@ State UpdateSettings(void){
     // valeurs actuelle du carrées rouge -valeur de depart) / (VALEUR MAX CARRE - valeur de derpart du carrée) * 100
     //int valeurSoundMusique =0;
    // int valeurSoundEffect =0;
-    int valeurMax =  500;
-    int valeurMin = 0;
+    //int valeurMax =  500;
+    //int valeurMin = 0;
     pourcentageFps = (FpsValue.width) /  (500 -  valeurDeDepart) * 100;
-    if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
+    if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)){
             mouse.x = GetMouseX();
             mouse.y = GetMouseY();
             if (CheckCollisionPointRec(mouse, MenuBoutton)){
@@ -89,7 +89,6 @@ State UpdateSettings(void){
 
     }
 
-    //CloseAudioDevice(); ;
     return STATE_SETTINGS;
    
 }      

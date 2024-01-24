@@ -1,7 +1,7 @@
 #include "game.h"
 
 State previous_state = STATE_GAMEPLAY;
-State state = STATE_GAMEPLAY;
+State state = STATE_HOME;
 State next_state = STATE_GAMEPLAY;
 bool game_over = false;
 
@@ -17,7 +17,7 @@ void game(void)
             
             current_music = LoadMusicStream("resources/Sound_fond.mp3");
             PlayMusicStream(current_music);
-            printf("Chargement musique home");
+           
         }
         previous_state = state;
         next_state = UpdateHome();
@@ -32,7 +32,7 @@ void game(void)
             
             current_music = LoadMusicStream("resources/m1.mp3");
             PlayMusicStream(current_music);
-            printf("/////////////////////////////////////Chargement musique menu");
+            
         }
         previous_state = state;
         next_state = UpdateMenu();
@@ -70,8 +70,13 @@ void game(void)
             current_music = LoadMusicStream("resources/Sound_fond.mp3");
             PlayMusicStream(current_music);
         }
-        end_game();
-        printf("end");
+        next_state = UpdateEndGame();
+
+        if(next_state!=state)
+            break;
+
+        DrawEndGame();
+        
         break;        
 
         break;
@@ -82,7 +87,7 @@ void game(void)
             break;
 
         DrawPause();
-        printf("pause");
+        
         break;
 
     default:
