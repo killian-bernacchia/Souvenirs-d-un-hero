@@ -42,17 +42,17 @@ void game(void)
         DrawGameplay();
         break;
     
-    case STATE_GAMEPLAY:
-        next_state = UpdateGameplay();
-
-        if(next_state!=state)
-            break;
-
-        DrawGameplay();
-        break;
 
     case STATE_END_GAME:
-        end_game();
+        next_state = UpdateEndGame();
+
+        if(next_state != state)
+            break;
+
+        DrawEndGame();
+        printf("end");
+        break;        
+
         break;
     case STATE_PAUSE:
         next_state = UpdatePause();
@@ -67,8 +67,6 @@ void game(void)
     default:
         break;
     }
-
-    
 
     previous_state = state;
     state = next_state;
