@@ -25,8 +25,8 @@ State UpdateGameplay(void)
     {
         printf("Gameplay initialised\n");
         LoadMap("resources/tilemaptuto.png");
-        UnloadMusicStream(current_music);
-        current_music = LoadMusicStream("resources/eq2-pantheon.wav");
+        //UnloadMusicStream(current_music);
+        //current_music = LoadMusicStream("resources/eq2-pantheon.wav");
         
         LoadPlayer(&player);
         victory = false;

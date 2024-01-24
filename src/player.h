@@ -18,6 +18,15 @@ typedef struct {
     Rectangle hitbox;
 } Player;
 
+typedef struct Memory {
+    Vector2 position;
+    Texture2D texture;
+    float scale;
+    Rectangle hitbox;
+    float puls;
+    bool isAlive;
+} Memory;
+
 
 
 void LoadPlayer(Player *player);
