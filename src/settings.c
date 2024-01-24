@@ -61,7 +61,6 @@ State UpdateSettings(void){
     int valeurMax =  500;
     int valeurMin = 0;
     pourcentageFps = (FpsValue.width) /  (500 -  valeurDeDepart) * 100;
-    Music music = LoadMusicStream("resources/Audiomachine - Return of the King.mp3");;
     if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
             mouse.x = GetMouseX();
             mouse.y = GetMouseY();
@@ -89,7 +88,6 @@ State UpdateSettings(void){
             }
 
     }
-    UnloadMusicStream(music);   // Unload music stream buffers from RAM
 
     //CloseAudioDevice(); ;
     return STATE_SETTINGS;
