@@ -1,8 +1,8 @@
 #include "game.h"
 
-State previous_state = STATE_GAMEPLAY;
-State state = STATE_HOME;
-State next_state = STATE_GAMEPLAY;
+State previous_state = STATE_CINEMATICS;
+State state = STATE_CINEMATICS;
+State next_state = STATE_CINEMATICS;
 bool game_over = false;
 
 Music current_music;
@@ -11,6 +11,13 @@ void game(void)
 {
     switch (state)
     {
+    case STATE_CINEMATICS:
+        previous_state = state;
+        next_state = UpdateCinematics();
+        if(next_state!=state)
+            break;
+        DrawCinematics();
+        break;
     case STATE_HOME:
         if (previous_state != state)
         {
