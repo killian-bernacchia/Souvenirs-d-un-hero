@@ -1,8 +1,8 @@
 #include "game.h"
 
-State previous_state = STATE_CINEMATICS;
-State state = STATE_CINEMATICS;
-State next_state = STATE_CINEMATICS;
+State previous_state = STATE_HOME;
+State state = STATE_HOME;
+State next_state = STATE_HOME;
 bool game_over = false;
 
 Music current_music;

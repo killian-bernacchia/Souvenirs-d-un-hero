@@ -37,7 +37,7 @@ State UpdateMenu(void)
         if (CheckCollisionPointRec(mouse, settings_btn))
             return STATE_SETTINGS;
         if (CheckCollisionPointRec(mouse, play_btn))
-            return STATE_GAMEPLAY;
+            return STATE_CINEMATICS;
     }
     return STATE_MENU;
 }
