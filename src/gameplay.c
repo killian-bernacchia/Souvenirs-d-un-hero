@@ -6,7 +6,7 @@ Scene scene = SCENE_PLATFORMER;
 Scene next_scene = SCENE_PLATFORMER;
 
 bool victory = false;
-bool exit = false;
+bool exitGamePlay = false;
 
 void gameplay(void)
 {
@@ -36,7 +36,7 @@ State UpdateGameplay(void)
 
     if(game_over | victory)
         return STATE_END_GAME;
-    if(exit)
+    if(exitGamePlay)
         return STATE_MENU;
 
     return STATE_GAMEPLAY;
@@ -45,9 +45,11 @@ State UpdateGameplay(void)
 void DrawGameplay(void)
 {
     if(next_scene!=scene)
+    {
         previous_scene = scene;
         scene = next_scene;
         return;
+    }
 
     switch (scene)
     {
@@ -70,5 +72,52 @@ void DrawGameplay(void)
 
     previous_scene = scene;
     next_scene = scene;
+    return;
+}
+
+
+
+//PANTHEON
+Scene UpdatePantheon(void)
+{
+    return (Scene){0};
+}
+void DrawPantheon(void)
+{
+    return;
+}
+//CINEMATIC_OUT
+Scene UpdateCinematicOut(void)
+{
+    return (Scene){0};
+}
+void DrawCinematicOut(void)
+{
+    return;
+}
+//CINEMATIC_IN
+Scene UpdateCinematicIn(void)
+{
+    return (Scene){0};
+}
+void DrawCinematicIn(void)
+{
+    return;
+}
+//PLATFORMER
+Scene UpdatePlatformer(void)
+{
+    return (Scene){0};
+}
+void DrawPlatformer(void)
+{
+    return;
+}
+//PAUSE
+Scene UpdatePause(void)
+{
+    return (Scene){0};
+}
+void DrawPause(void){
     return;
 }

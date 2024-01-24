@@ -22,4 +22,8 @@ void DrawCinematicIn(void);
 Scene UpdatePlatformer(void);
 void DrawPlatformer(void);
 
+//PAUSE
+Scene UpdatePause(void);
+void DrawPause(void);
+
 #endif

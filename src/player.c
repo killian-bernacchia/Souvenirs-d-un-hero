@@ -1,10 +1,18 @@
 #include "raylib.h"
 #include "player.h"
-#include "raymath.h"
-void player(void){
+
+
+
+Player player;
+
+/*
+fonction d'initialisation de l'image du joueur
+*/
+void initImage(float x, float y, float speed){
 
     const int screenWidth = 800;
     const int screenHeight = 450;
+    
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - 2d camera");
 
@@ -12,25 +20,36 @@ void player(void){
     Texture2D texture = LoadTextureFromImage(image);       // Image converted to texture, GPU memory (RAM -> VRAM)
     UnloadImage(image);
 
-    Player createPlayer(float x, float y, float speed) {
-    Player player = { (Vector2){ x, y }, speed, false };
-    return player;
+
+}
+
+// mouvement du joueur sur la gauche
+void moveLeft(Player *player) {}
+// mouvemtn du joueur sur la droite
+void moveRight(Player *player){}
+// saut du joueur 
+void jump(Player *player){}
+
+Player createPlayer(float x, float y, float speed){
+    return (Player){0};
 }
 
 // mouvement joueur 
 void UpdatePlayer(Player *player) {
     if (IsKeyDown(KEY_RIGHT)) {
-        player->position.x -= player->speed;
-        GetFrameTime
+        moveRight(player);
+        // player->position.x -= player->speed;
     }
     else if (IsKeyDown(KEY_LEFT)) {
-        player->position.x += player->speed;
+        moveLeft(player);
+        // player->position.x += player->speed;
     }
 
-    if (IsKeyPressed(KEY_SPACE)) && !player->isJumping) {
-        player->isJumping = true;
+    if (IsKeyPressed(KEY_SPACE) && !player->isJumping) {
+        jump(player);
+        // player->isJumping = true;
     }
-}
+
 
     float forceVertical = 0;
     float gravity = 0.08;
@@ -51,43 +70,4 @@ void UpdatePlayer(Player *player) {
         player->position.y = 280.0f;
         player->isJumping = false;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-while (!WindowShouldClose())    // Detect window close button or ESC key
-    {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

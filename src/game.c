@@ -73,3 +73,5 @@ void game(void)
     previous_state = state;
     state = next_state;
 }
+
+

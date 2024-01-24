@@ -1,6 +1,11 @@
 #include "end_game.h"
 
-void end_game(void)
+State UpdateEndGame(void)
+{
+    return STATE_END_GAME;
+}
+
+void DrawEndGame(void)
 {
     return;
 }

@@ -28,7 +28,8 @@ extern State UpdateGameplay(void);
 extern void DrawGameplay(void);
 
 //END_GAME
-extern void end_game(void);
+extern State UpdateEndGame(void);
+extern void DrawEndGame(void);
 
 extern bool game_over;
 
