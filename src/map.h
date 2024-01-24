@@ -33,7 +33,7 @@ extern Tile *tileMap;
 //size of the map
 extern int mapWidth;
 extern int mapHeight;
-extern memoriesCount;
+extern int memoriesCount;
 extern Vector2 *memoriesPositions;
 //do nothing
 void map(void);

@@ -41,7 +41,6 @@ void LoadPlayer(Player *player)
     for(int id = 0; id < memoriesCount; id++)
     {
         memories[id].position = memoriesPositions[id];
-        printf("%i %i\n", (int)memories[id].position.x, (int)memories[id].position.y);
         memories[id].texture = memoryTexture;
         memories[id].scale = 0.1f;
         memories[id].hitbox = (Rectangle){ 0 };
@@ -67,23 +66,22 @@ void DrawPlayer(Player *player)
     position.x -= player->scale*player->texture.width/2;
     position.y -= player->scale*player->texture.height/2 + cosf(GetTime()*2*PI*0.4f)*7.0f - 6.0f;
 
-    float fade = 255*player->life/30.0f + 10.0f;
-    if(fade > 254.9f) fade = 254.9f;
-    printf("fade : %f\n", fade);
+    float fade = 255*player->life/40.0f + 10.0f;
+    if(fade > 254.9f) fade = 254.9f;    
     Color fadeColor = (Color){ 255, 255, 255, (int)fade };
     BeginMode2D(player->camera);
         DrawTextureEx(playerGreyTexture, position, 0.0f, player->scale, WHITE);
-        DrawTextureEx(player->texture, position, 0.0f, player->scale, fadeColor);
+        DrawTextureEx(playerTexture, position, 0.0f, player->scale, fadeColor);
     EndMode2D();
 
     for(int id = 0; id < memoriesCount; id++)
     {
         if(! memories[id].isAlive) continue;
         Vector2 position = memories[id].position;
-        position.x -= memories[id].scale*memories[id].texture.width/2;
-        position.y -= memories[id].scale*memories[id].texture.height/2 + cosf(GetTime()*2*PI*memories[id].puls)*4.0f;
         BeginMode2D(player->camera);
-            DrawTextureEx(memories[id].texture, position, 0.0f, memories[id].scale, WHITE);
+            position.x -= memories[id].scale*memories[id].texture.width/2;
+            position.y -= memories[id].scale*memories[id].texture.height/2 + cosf(GetTime()*2*PI*memories[id].puls)*4.0f;
+            DrawTextureEx(memoryTexture, position, 0.0f, memories[id].scale, WHITE);
         EndMode2D();
     }
 }
@@ -204,7 +202,7 @@ void CheckCollision(Player *player)
         {
             printf("Memory %i collected\n", id);
             memories[id].isAlive = false;
-            player->life += 10.0f;
+            player->life += 20.0f;
         }
     }
 

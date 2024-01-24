@@ -152,8 +152,8 @@ void DrawPlatformer(void)
     BeginDrawing();
         ClearBackground(DARKGRAY);
         Vector2 position = player.position;
-        position.y+=12000;
-        position.x+=3800;
+        position.y+=2800;
+        position.x+=3200;
         UpdateParallax(position);
         DrawMap(player.camera);
         DrawPlayer(&player);
