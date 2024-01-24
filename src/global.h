@@ -6,4 +6,5 @@ extern const int screenWidth;
 extern int  fps ;
 extern float volumeMusique;
 extern float volumeDialogue;
+extern bool exitGame;
 #endif

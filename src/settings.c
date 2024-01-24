@@ -71,8 +71,8 @@ State UpdateSettings(void){
             if (CheckCollisionPointRec(mouse, Fps)){
   
  
-                FpsValue.width = mouse.x - ( valeurDeDepart) ;
-                fps = pourcentageFps*pourcentageFps /600 + 1;//100.0f/500.0f;
+                FpsValue.width = mouse.x - ( valeurDeDepart)  ;
+                fps = pourcentageFps*pourcentageFps /600 + 31;//100.0f/500.0f;
                 SetTargetFPS(fps);
                 
 

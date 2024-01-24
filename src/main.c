@@ -9,6 +9,7 @@ const int screenWidth = 1280;
 int  fps = 0;
 float volumeMusique = 0.9f;
 float volumeDialogue = 0.9f;
+bool exitGame = true;
 
 
 int main() 
@@ -24,7 +25,9 @@ int main()
     InitParallax();
 
     SetTargetFPS(fps); 
+
     SetExitKey(0);
+//--------------------------------------------------------------------------------------
 
     current_music = LoadMusicStream("resources/Sound_fond.mp3");
     PlayMusicStream(current_music);
@@ -34,8 +37,26 @@ int main()
     
     //PlayMusicStream(current_music);
      
+// Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {  
+
+    SetExitKey(0);             
+    //--------------------------------------------------------------------------------------
+
+    // Main game loop
+    while (!WindowShouldClose() && exitGame != false )    // Detect window close button or ESC key
+    { 
+        // Update
+        //----------------------------------------------------------------------------------
+        
+        //----------------------------------------------------------------------------------
+
+        // Draw
+        //----------------------------------------------------------------------------------
+        //DrawGame();
+        //----------------------------------------------------------------------------------
+
         
         game();
         UpdateMusicStream(current_music);
