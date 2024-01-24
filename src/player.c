@@ -1,73 +1,162 @@
 #include "raylib.h"
 #include "player.h"
 
+#define GRAVITY 38.0f   //pixels per second per second
+#define JUMP_SPD 8.0f
+#define MOUV_SPD 80.0f
+#define TIME_FACTOR 40.0f
+#define MAX_SPEED 20.0f
 
+Texture2D playerTexture;
 
-Player player;
+void LoadPlayer(Player *player)
+{
+    player->position = (Vector2){ 0,0 };
+    player->speed = (Speed){ 0, 0 };
+    player->camera = (Camera2D){ 0 };
+    player->camera.target = (Vector2){ 0, 0 };
+    player->camera.offset = (Vector2){ screenWidth/2, screenHeight/2 };
+    player->camera.rotation = 0.0f;
+    player->camera.zoom = 1.0f;
+    player->life = 30.0f;
+    player->scale = 0.1f;
+    player->texture = LoadTexture("resources/feu_follet_frame1.png");
+    player->hitbox = (Rectangle){ 0 };
+    player->hitbox.x = -player->texture.width*player->scale/2;
+    player->hitbox.y = -player->texture.height*player->scale/2;
+    player->hitbox.width = player->texture.width*player->scale;
+    player->hitbox.height = player->texture.height*player->scale;
+}
 
-/*
-fonction d'initialisation de l'image du joueur
-*/
-void initImage(float x, float y, float speed){
+void UnloadPlayer(Player *player)
+{
+    UnloadTexture(player->texture);
+}
 
-    const int screenWidth = 800;
-    const int screenHeight = 450;
-    
+void DrawPlayer(Player *player)
+{
+    Vector2 position = player->position;
+    position.x -= player->scale*player->texture.width/2;
+    position.y -= player->scale*player->texture.height/2;
+    BeginMode2D(player->camera);
+        DrawTextureEx(player->texture, position, 0.0f, player->scale, WHITE);
+    EndMode2D();
+}
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - 2d camera");
+void UpdateSpeed(Player *player, Seconds delta)
+{
+    if(IsKeyDown(KEY_LEFT))
+    {
+        player->speed.x = -MOUV_SPD*delta;
+    }
+    else if(IsKeyDown(KEY_RIGHT))
+    {
+        player->speed.x = MOUV_SPD*delta;
+    }
+    else
+    {
+        player->speed.x = 0.0f;
+    }
+    player->speed.y += GRAVITY*delta/TIME_FACTOR;
 
-    Image image = LoadImage("resources/raylib_logo.png");  // Load image data into CPU memory (RAM)
-    Texture2D texture = LoadTextureFromImage(image);       // Image converted to texture, GPU memory (RAM -> VRAM)
-    UnloadImage(image);
+    if(IsKeyDown(KEY_UP))
+    {
+        player->speed.y = -MOUV_SPD*delta;
+    }
+    else if(IsKeyDown(KEY_DOWN))
+    {
+        player->speed.y = MOUV_SPD*delta;
+    }
 
+    if(player->speed.x > MAX_SPEED)
+    {
+        player->speed.x = MAX_SPEED;
+    }
+    else if(player->speed.x < -MAX_SPEED)
+    {
+        player->speed.x = -MAX_SPEED;
+    }
+
+    if(player->speed.y > MAX_SPEED)
+    {
+        player->speed.y = MAX_SPEED;
+    }
+    else if(player->speed.y < -MAX_SPEED)
+    {
+        player->speed.y = -MAX_SPEED;
+    }
+
+    if(IsKeyPressed(KEY_SPACE))
+    {
+        player->speed.y = -JUMP_SPD*TIME_FACTOR;
+    }
+}
+
+void UpdatePosition(Player *player, Seconds delta)
+{
+    player->position.x += player->speed.x*delta;
+    player->position.y += player->speed.y*delta;
+}
+
+void CheckCollision(Player *player)
+{    
+    if(player->position.y > mapHeight*TILE_SIZE )
+    {
+        //game over
+        player->position.y = mapHeight*TILE_SIZE;
+        player->speed.y = 0.0f;
+    }
+
+    for(int y = 0; y < mapHeight; y++)
+    {
+        for(int x = 0; x < mapWidth; x++)
+        {
+            Tile *tile = tileMap + y*mapWidth + x;
+            if(tile->type != TILE_EMPTY)
+            {
+                Rectangle tileHitbox = (Rectangle){ x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE };
+                Rectangle playerHitbox = (Rectangle){ 0 };
+                playerHitbox.x = player->position.x + player->hitbox.x;
+                playerHitbox.y = player->position.y + player->hitbox.y;
+                playerHitbox.width = player->hitbox.width;
+                playerHitbox.height = player->hitbox.height;
+                if(CheckCollisionRecs(playerHitbox, tileHitbox))
+                {
+                    //Collision from bottom
+                    if(player->speed.y < 0.0f)
+                    {
+                        player->position.y = tileHitbox.y + tileHitbox.height;
+                        player->speed.y = 0.0f;
+                    }
+                    //Collision from top
+                    else if(player->speed.y >= 0.0f)
+                    {
+                        player->position.y = tileHitbox.y - player->hitbox.height/2;
+                        player->speed.y = 0.0f;
+                    }                    
+                }
+            }
+        }
+    }
 
 }
 
-// mouvement du joueur sur la gauche
-void moveLeft(Player *player) {}
-// mouvemtn du joueur sur la droite
-void moveRight(Player *player){}
-// saut du joueur 
-void jump(Player *player){}
-
-Player createPlayer(float x, float y, float speed){
-    return (Player){0};
+void UpdatePlayerCamera(Player *player)
+{
+    Vector2 position = player->position;
+    /*
+    Vector2 delta = { position.x - player->camera.target.x, position.y - player->camera.target.y };
+    player->camera.target.x += delta.x/90.0f;
+    player->camera.target.y += delta.y/90.0f;
+    */
+    player->camera.target = position;
 }
 
-// mouvement joueur 
-void UpdatePlayer(Player *player) {
-    if (IsKeyDown(KEY_RIGHT)) {
-        moveRight(player);
-        // player->position.x -= player->speed;
-    }
-    else if (IsKeyDown(KEY_LEFT)) {
-        moveLeft(player);
-        // player->position.x += player->speed;
-    }
-
-    if (IsKeyPressed(KEY_SPACE) && !player->isJumping) {
-        jump(player);
-        // player->isJumping = true;
-    }
-
-
-    float forceVertical = 0;
-    float gravity = 0.08;
-     // gravité
-    if (player->position.y < 280.0f || player->isJumping) {
-        player->position.y += 5.0f; 
-    }
-
-    // Mettez à jour la position y du joueur en fonction de la logique de saut
-    if (player->isJumping) {
-        // Implémentez la logique de saut ici (par exemple, modifier la position y du joueur)
-        // Par exemple, vous pouvez augmenter la position y pendant un certain temps, puis la diminuer pour simuler un saut.
-        player->position.y -= 5.0f;  // Placeholder, ajustez selon vos besoins
-    }
-
-    // Remettez à zéro le saut lorsque le joueur touche le sol (ajoutez votre propre logique ici)
-    if (player->position.y >= 280.0f) {
-        player->position.y = 280.0f;
-        player->isJumping = false;
-    }
+void UpdatePlayer(Player *player, Seconds delta)
+{
+    delta *= TIME_FACTOR;
+    UpdateSpeed(player, delta);
+    UpdatePosition(player, delta);
+    CheckCollision(player);
+    UpdatePlayerCamera(player);
 }

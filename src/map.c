@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define TILE_SIZE 40
 #define EMPTY   0x00000000
 #define SOLID   0x000000ff
 #define THROUGH 0x663931ff
@@ -10,9 +9,6 @@
 
 #define ENNEMY  0x000003ff
 #define MEMORY  0xffffffff
-
-//texture of the map to draw it on the screen
-Texture2D mapTexture;
 
 //tileMap of the game, it stores the type of each tile
 //size = mapWidth * mapHeight
@@ -22,9 +18,6 @@ Tile *tileMap;
 int mapWidth;
 int mapHeight;
 
-
-RenderTexture2D mapRender;
-
 Vector2 *ennemiesPositions;
 int ennemiesCount;
 
@@ -33,15 +26,13 @@ int memoriesCount;
 
 bool isMapLoaded = false;
 
-RenderTexture2D renderTextureLadder;
-RenderTexture2D renderTextureSolid;
-RenderTexture2D renderTextureThrough;
-RenderTexture2D renderTextureEmpty;
+Texture2D textureLadder;
+Texture2D textureSolid;
+Texture2D textureThrough;
+Texture2D textureEmpty;
 
 void LoadTilesTextures(void);
-void LoadMapTexture(void);
 void UnloadTilesTextures(void);
-void UnloadMapTexture(void);
 
 
 void map(void)
@@ -66,8 +57,6 @@ void LoadMap(const char *filename)
     mapHeight = image.height;
 
     LoadTilesTextures();
-    LoadMapTexture();
-
     tileMap = (Tile *) malloc( mapWidth * mapHeight * sizeof(Tile) );
 
 
@@ -83,26 +72,28 @@ void LoadMap(const char *filename)
             {
                 case EMPTY: 
                     tile->type = TILE_EMPTY; 
-                    tile->render = renderTextureEmpty;
+                    tile->texture = textureEmpty;
                     break;
                 case SOLID:
                     tile->type = TILE_SOLID;
-                    tile->render = renderTextureSolid;
+                    tile->texture = textureSolid;
                     break;
                 case THROUGH:
                     tile->type = TILE_THROUGH;
-                    tile->render = renderTextureThrough;
+                    tile->texture = textureThrough;
                     break;
                 case LADDER:
                     tile->type = TILE_LADDER;
-                    tile->render = renderTextureLadder;
+                    tile->texture = textureLadder;
                     break;
                 case ENNEMY:
                     tile->type = TILE_ENNEMY;
+                    tile->texture = textureEmpty;
                     ennemiesCount++;
                     break;
                 case MEMORY:
                     tile->type = TILE_MEMORY;
+                    tile->texture = textureEmpty;
                     memoriesCount++;
                     break;
             }
@@ -156,26 +147,23 @@ void UnloadMap(void)
     free(memoriesPositions);
 
     UnloadTilesTextures();
-    UnloadMapTexture();
     isMapLoaded = false;
 }
 
 void DrawMap(Camera2D camera)
 {
     Vector2 offset = camera.offset;
-    Vector2 target = camera.target;
 
     BeginMode2D(camera);    
-        for(int x = 0; x < mapWidth; x++)
+        for(int y = 0; y < mapHeight; y++)
         {
-            for(int y = 0; y < mapHeight; y++)
+            for(int x = 0; x < mapWidth; x++)
             {
                 Tile *tile = tileMap + y*mapWidth + x;
-                DrawTexture(tile->render.texture, x*TILE_SIZE - offset.x, y*TILE_SIZE - offset.y, WHITE);
+                DrawTexture(tile->texture, x*TILE_SIZE, y*TILE_SIZE, WHITE);
             }
         }
     EndMode2D();
-
 
 }
 
@@ -193,47 +181,33 @@ void PrintMapInt(void)
     }
 }
 
-void LoadTilesTextures(void)
+void PrintHexPng(const char *filename)
 {
-    renderTextureLadder = LoadRenderTexture(TILE_SIZE, TILE_SIZE);
-    renderTextureSolid = LoadRenderTexture(TILE_SIZE, TILE_SIZE);
-    renderTextureThrough = LoadRenderTexture(TILE_SIZE, TILE_SIZE);
-    renderTextureEmpty = LoadRenderTexture(TILE_SIZE, TILE_SIZE);
-
-    BeginTextureMode(renderTextureLadder);
-        ClearBackground(ORANGE);
-    EndTextureMode();
-
-    BeginTextureMode(renderTextureSolid);
-        ClearBackground(DARKGRAY);
-    EndTextureMode();
-    
-    BeginTextureMode(renderTextureThrough);
-        ClearBackground(BROWN);
-    EndTextureMode();
-
-    BeginTextureMode(renderTextureEmpty);
-        ClearBackground(BLANK);
-    EndTextureMode();
-
+    Image image = LoadImage(filename);
+    for ( int y = 0; y < image.height; y++ )
+    {
+        for ( int x = 0; x < image.width; x++ )
+        {
+            Color color = GetImageColor(image, x, y);
+            printf("0x%08x ", ColorToInt(color));
+        }
+        printf("\n");
+    }
+    UnloadImage(image);
 }
 
-void LoadMapTexture(void)
+void LoadTilesTextures(void)
 {
-    mapRender = LoadRenderTexture(screenWidth, screenHeight);
-    mapTexture = mapRender.texture;
+    textureEmpty = LoadTexture("resources/empty.png");
+    textureSolid = LoadTexture("resources/solid.png");
+    textureThrough = LoadTexture("resources/through.png");
+    textureLadder = LoadTexture("resources/ladder.png");
 }
 
 void UnloadTilesTextures(void)
 {
-    UnloadRenderTexture(renderTextureLadder);
-    UnloadRenderTexture(renderTextureSolid);
-    UnloadRenderTexture(renderTextureThrough);
-    UnloadRenderTexture(renderTextureEmpty);
-}
-
-void UnloadMapTexture(void)
-{
-    UnloadTexture(mapTexture);
-    UnloadRenderTexture(mapRender);
+    UnloadTexture(textureLadder);
+    UnloadTexture(textureSolid);
+    UnloadTexture(textureThrough);
+    UnloadTexture(textureEmpty);
 }

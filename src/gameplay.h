@@ -1,6 +1,7 @@
 #ifndef GAMEPLAY_H
 #define GAMEPLAY_H
 #include "game.h"
+#include "global.h"
 
 typedef enum Scene {SCENE_PANTHEON, SCENE_CINEMATIC_OUT, SCENE_CINEMATIC_IN, SCENE_PLATFORMER} Scene;
 

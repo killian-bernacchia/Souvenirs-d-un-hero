@@ -3,6 +3,9 @@
 
 #include "global.h"
 #include "raylib.h"
+#define TILE_SIZE 40    
+#define SCREEN_TILE_WIDTH  32
+#define SCREEN_TILE_HEIGHT 18
 
 typedef enum TileType
 {
@@ -17,11 +20,10 @@ typedef enum TileType
 typedef struct Tile
 {
     TileType type;
-    RenderTexture2D render;
+    Texture2D texture;
 } Tile;
 
 //texture of the map to draw it on the screen
-extern Texture2D mapTexture;
 extern RenderTexture2D mapRender;
 
 //tileMap of the game, it stores the type of each tile
@@ -50,5 +52,7 @@ void DrawMap(Camera2D camera);
 //Print tiles types as int for debug purpose
 void PrintMapInt(void);
 
+//Print tiles as hex for debug purpose
+void PrintHexPng(const char *filename);
 
 #endif

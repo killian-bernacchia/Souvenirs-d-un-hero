@@ -3,6 +3,7 @@
 
 #include "raylib.h"
 #include "menu.h"
+
 //type
 typedef enum State {STATE_HOME, STATE_MENU, STATE_SETTINGS, STATE_GAMEPLAY, STATE_END_GAME, STATE_PAUSE} State;
 
@@ -35,6 +36,6 @@ extern State UpdatePause(void);
 extern void DrawPause(void);
 
 extern bool game_over;
-
+extern Music current_music;
 
 #endif

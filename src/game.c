@@ -1,10 +1,9 @@
 #include "game.h"
 
-State previous_state = STATE_GAMEPLAY;
-State state = STATE_GAMEPLAY;
-State next_state = STATE_GAMEPLAY;
+State previous_state = STATE_HOME;
+State state = STATE_HOME;
+State next_state = STATE_HOME;
 bool game_over = false;
-
 Music current_music;
 
 void game(void)
@@ -21,6 +20,7 @@ void game(void)
 
     case STATE_MENU:
         next_state = UpdateMenu();
+
         if(next_state!=state)
             break;
         DrawMenu();
@@ -50,7 +50,6 @@ void game(void)
             break;
 
         DrawEndGame();
-        printf("end");
         break;        
 
         break;
@@ -61,7 +60,6 @@ void game(void)
             break;
 
         DrawPause();
-        printf("pause");
         break;
     
     default:

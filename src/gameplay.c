@@ -1,11 +1,18 @@
 #include "gameplay.h"
 #include "map.h"
+#include "parallax.h"
+#include "stdio.h"
+#include "player.h"
 
 Scene previous_scene = SCENE_PLATFORMER;
 Scene scene = SCENE_PLATFORMER;
 Scene next_scene = SCENE_PLATFORMER;
+
+Player player = { 0 };
+
 bool victory = false;
 bool exitGamePlay = false;
+bool gamePlayInitialised = false;
 
 void gameplay(void)
 {
@@ -14,6 +21,18 @@ void gameplay(void)
 
 State UpdateGameplay(void)
 {    
+    if(!gamePlayInitialised)
+    {
+        printf("Gameplay initialised\n");
+        LoadMap("resources/tilemaptuto.png");
+        UnloadMusicStream(current_music);
+        current_music = LoadMusicStream("resources/eq2-pantheon.wav");
+        
+        LoadPlayer(&player);
+        victory = false;
+        exitGamePlay = false;
+        gamePlayInitialised = true;
+    }
     
     switch (scene)
     {
@@ -76,40 +95,69 @@ void DrawGameplay(void)
 //PANTHEON
 Scene UpdatePantheon(void)
 {
-    return (Scene){0};
+    return (Scene)SCENE_PANTHEON;
 }
+
 void DrawPantheon(void)
 {
     return;
 }
+
 //CINEMATIC_OUT
 Scene UpdateCinematicOut(void)
 {
-    return (Scene){0};
+    return (Scene)SCENE_CINEMATIC_OUT;
 }
+
 void DrawCinematicOut(void)
 {
+    EndDrawing();
     return;
 }
+
 //CINEMATIC_IN
 Scene UpdateCinematicIn(void)
 {
-    return (Scene){0};
+    return (Scene)SCENE_CINEMATIC_IN;
 }
+
 void DrawCinematicIn(void)
 {
+    EndDrawing();
     return;
 }
+
 //PLATFORMER
 Scene UpdatePlatformer(void)
 {
+    static bool setted = false;
+    static Seconds delta_t;
+    if(!setted)
+    {
+        InitParallax();
+        player.position = (Vector2){ TILE_SIZE/2, -8*TILE_SIZE };
+        player.camera.target = player.position;
+        delta_t = 0.0f;        
+        setted = true;
+    }
+    else delta_t = GetFrameTime();
+
+    UpdatePlayer(&player, delta_t);
+
     return SCENE_PLATFORMER;
 }
 
 void DrawPlatformer(void)
 {
     BeginDrawing();
-        ClearBackground(RAYWHITE);
+        ClearBackground(DARKGRAY);
+        Vector2 position = player.position;
+        position.y+=12000;
+        position.x+=3800;
+        UpdateParallax(position);
+        DrawMap(player.camera);
+        DrawPlayer(&player);
+        DrawFPS(10,10);
     EndDrawing();
     return;
 }
