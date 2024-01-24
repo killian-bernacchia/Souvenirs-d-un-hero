@@ -62,15 +62,13 @@ extern void DrawHome(void)
 State UpdateHome(void)
 {
     if (IsKeyReleased(KEY_SPACE)){
-        textureetted = false;
-        feu_follet_loaded = false;
         UnloadImage(logo);
         UnloadTexture(texture); 
         UnloadTexture(feu_follet_texture1); 
-        
         UnloadTexture(feu_follet_texture2); 
-       
-        UnloadTexture(feu_follet_texture3); 
+        UnloadTexture(feu_follet_texture3);
+        textureetted = false;
+        feu_follet_loaded = false;
         return STATE_MENU;
     }
        
