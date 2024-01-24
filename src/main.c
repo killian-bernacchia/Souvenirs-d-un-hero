@@ -8,26 +8,25 @@ int main()
     //--------------------------------------------------------------------------------------
 	int fps = 0;
     InitWindow(screenWidth, screenHeight, "raylib");
-    InitAudioDevice();              // Initialize audio device
+    InitAudioDevice();// Initialize audio device
 
     SetTargetFPS(fps); 
-    SetExitKey(0);              
-    //--------------------------------------------------------------------------------------
+    SetExitKey(0);
 
-    // Main game loop
+    current_music = LoadMusicStream("resources/Sound_fond.mp3");
+    PlayMusicStream(current_music);
+     
+         
+   
+    
+    //PlayMusicStream(current_music);
+     
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {  
-        // Update
-        //----------------------------------------------------------------------------------
-        
-        //----------------------------------------------------------------------------------
-
-        // Draw
-        //----------------------------------------------------------------------------------
-        //DrawGame();
-        //----------------------------------------------------------------------------------
         
         game();
+        UpdateMusicStream(current_music);
+        
     }
 
     // De-Initialization
