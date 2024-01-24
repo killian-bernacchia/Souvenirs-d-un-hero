@@ -36,14 +36,14 @@ void LoadPlayer(Player *player)
     player->hitbox.width = player->texture.width*player->scale;
     player->hitbox.height = player->texture.height*player->scale;
 
-    memoryTexture = LoadTexture("resources/memory.png");
+    memoryTexture = LoadTexture("resources/lotus.png");
     memories = (Memory*)malloc(sizeof(Memory)*memoriesCount);
     for(int id = 0; id < memoriesCount; id++)
     {
         memories[id].position = memoriesPositions[id];
         printf("%i %i\n", (int)memories[id].position.x, (int)memories[id].position.y);
         memories[id].texture = memoryTexture;
-        memories[id].scale = 0.1f;
+        memories[id].scale = 0.15f;
         memories[id].hitbox = (Rectangle){ 0 };
         memories[id].hitbox.x = -memories[id].texture.width*memories[id].scale/2;
         memories[id].hitbox.y = -memories[id].texture.height*memories[id].scale/2;
