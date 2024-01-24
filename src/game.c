@@ -3,6 +3,7 @@
 State previous_state = STATE_END_GAME;
 State state = STATE_HOME;
 State next_state = STATE_HOME;
+bool game_over = false;
 
 Music current_music;
 
@@ -31,6 +32,24 @@ void game(void)
             break;
         DrawSettings();
         break;
+    
+    case STATE_GAMEPLAY:
+        next_state = UpdateGameplay();
+
+        if(next_state!=state)
+            break;
+
+        DrawGameplay();
+        break;
+    
+    case STATE_GAMEPLAY:
+        next_state = UpdateGameplay();
+
+        if(next_state!=state)
+            break;
+
+        DrawGameplay();
+        break;
 
     case STATE_END_GAME:
         end_game();
@@ -45,3 +64,5 @@ void game(void)
     previous_state = state;
     state = next_state;
 }
+
+
