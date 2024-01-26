@@ -211,12 +211,12 @@ void CheckCollision(Player *player)
 void UpdatePlayerCamera(Player *player)
 {
     Vector2 position = player->position;
-    /*
+    ///*
     Vector2 delta = { position.x - player->camera.target.x, position.y - player->camera.target.y };
     player->camera.target.x += delta.x/90.0f;
     player->camera.target.y += delta.y/90.0f;
-    */
-    player->camera.target = position;
+    //*/
+    //player->camera.target = position;
 }
 
 void UpdatePlayer(Player *player, Seconds delta)
