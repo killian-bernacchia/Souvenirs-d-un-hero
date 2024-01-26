@@ -4,17 +4,19 @@
 #include <math.h>
 #include <stdlib.h>
 
-#define GRAVITY 38.0f   //pixels per second per second
-#define JUMP_SPD 8.0f
-#define MOUV_SPD 80.0f
-#define TIME_FACTOR 40.0f
-#define MAX_SPEED 20.0f
+//blocks per second
+#define GRAVITY 2000.0f
+#define JUMP_SPD 22.0f
+#define MOUV_SPD 10.0f
+#define MAX_SPEED (3000.0f/TILE_SIZE)
 
 Texture2D playerTexture;
 Texture2D playerGreyTexture;
 Texture2D memoryTexture;
 
 Memory *memories;
+
+int debubCount = 0;
 
 void LoadPlayer(Player *player)
 {
@@ -89,52 +91,27 @@ void DrawPlayer(Player *player)
 void UpdateSpeed(Player *player, Seconds delta)
 {
     if(IsKeyDown(KEY_A))
-    {
-        player->speed.x = -MOUV_SPD*delta;
-    }
+        player->speed.x = -MOUV_SPD*TILE_SIZE;
     else if(IsKeyDown(KEY_D))
-    {
-        player->speed.x = MOUV_SPD*delta;
-    }
+        player->speed.x = MOUV_SPD*TILE_SIZE;
     else
-    {
         player->speed.x = 0.0f;
-    }
-    player->speed.y += GRAVITY*delta/TIME_FACTOR;
 
-    /*
-    if(IsKeyDown(KEY_W))
-    {
-        player->speed.y = -MOUV_SPD*delta;
-    }
-    else if(IsKeyDown(KEY_S))
-    {
-        player->speed.y = MOUV_SPD*delta;
-    }
-    */
-
-    if(player->speed.x > MAX_SPEED)
-    {
-        player->speed.x = MAX_SPEED;
-    }
-    else if(player->speed.x < -MAX_SPEED)
-    {
-        player->speed.x = -MAX_SPEED;
-    }
-
-    if(player->speed.y > MAX_SPEED)
-    {
-        player->speed.y = MAX_SPEED;
-    }
-    else if(player->speed.y < -MAX_SPEED)
-    {
-        player->speed.y = -MAX_SPEED;
-    }
-
+    player->speed.y += GRAVITY*delta;
     if(IsKeyPressed(KEY_SPACE))
-    {
-        player->speed.y = -JUMP_SPD*TIME_FACTOR;
-    }
+        player->speed.y = -JUMP_SPD*TILE_SIZE;
+
+
+
+    if(player->speed.x > MAX_SPEED*TILE_SIZE)
+        player->speed.x = MAX_SPEED*TILE_SIZE;
+    else if(player->speed.x < -MAX_SPEED*TILE_SIZE)
+        player->speed.x = -MAX_SPEED*TILE_SIZE;
+
+    if(player->speed.y > MAX_SPEED*TILE_SIZE)
+        player->speed.y = MAX_SPEED*TILE_SIZE;
+    else if(player->speed.y < -MAX_SPEED*TILE_SIZE)
+        player->speed.y = -MAX_SPEED*TILE_SIZE;
 }
 
 void UpdatePosition(Player *player, Seconds delta)
@@ -213,8 +190,8 @@ void UpdatePlayerCamera(Player *player)
     Vector2 position = player->position;
     ///*
     Vector2 delta = { position.x - player->camera.target.x, position.y - player->camera.target.y };
-    player->camera.target.x += delta.x/90.0f;
-    player->camera.target.y += delta.y/90.0f;
+    player->camera.target.x += delta.x*0.8f;
+    player->camera.target.y += delta.y*0.8f;
     //*/
     //player->camera.target = position;
 }
@@ -226,9 +203,17 @@ void UpdatePlayer(Player *player, Seconds delta)
     {
         player->life = 0.0f;
     }
-    delta *= TIME_FACTOR;
+    delta *= 1.0f;
     UpdateSpeed(player, delta);
     UpdatePosition(player, delta);
     CheckCollision(player);
     UpdatePlayerCamera(player);
+
+    if(debubCount++>50)
+    {
+        //speed
+        printf("Speed: %f %f\n", player->speed.x, player->speed.y);
+        debubCount = 0;
+    }
+
 }
