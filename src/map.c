@@ -152,7 +152,6 @@ void UnloadMap(void)
 
 void DrawMap(Camera2D camera)
 {
-    Vector2 offset = camera.offset;
 
     BeginMode2D(camera);    
         for(int y = 0; y < mapHeight; y++)
