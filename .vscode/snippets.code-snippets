@@ -14,7 +14,7 @@
 			"",
 			"$0",
 			"",
-			"#endif"
+			"#endif // ${1:header_name}"
 		],
 		"description": "Create an include guard for a new C Header."
 	}
