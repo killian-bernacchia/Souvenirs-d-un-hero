@@ -38,7 +38,7 @@ void LoadPlayer(Player *player)
     player->hitbox.width = player->texture.width*player->scale;
     player->hitbox.height = player->texture.height*player->scale;
 
-    memoryTexture = LoadTexture("resources/memory.png");
+    memoryTexture = LoadTexture("resources/lotus.png");
     memories = (Memory*)malloc(sizeof(Memory)*memoriesCount);
     for(int id = 0; id < memoriesCount; id++)
     {
