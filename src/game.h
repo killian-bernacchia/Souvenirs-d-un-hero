@@ -5,7 +5,7 @@
 #include "menu.h"
 
 //type
-typedef enum State {STATE_HOME, STATE_MENU, STATE_SETTINGS, STATE_GAMEPLAY, STATE_END_GAME, STATE_PAUSE} State;
+typedef enum State {STATE_HOME, STATE_MENU, STATE_SETTINGS, STATE_GAMEPLAY, STATE_END_GAME, STATE_PAUSE, STATE_CINEMATICS} State;
 
 //GAME
 extern void game(void);
@@ -34,6 +34,9 @@ extern void DrawEndGame(void);
 //PAUSE
 extern State UpdatePause(void);
 extern void DrawPause(void);
+
+extern State UpdateCinematics(void);
+extern void DrawCinematics(void);
 
 extern bool game_over;
 extern Music current_music;

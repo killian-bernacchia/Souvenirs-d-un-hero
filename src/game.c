@@ -10,6 +10,14 @@ void game(void)
 {
     switch (state)
     {
+    case STATE_CINEMATICS:
+        previous_state = state;
+        next_state = UpdateCinematics();
+        if(next_state!=state)
+            break;
+        DrawCinematics();
+        break;
+
     case STATE_HOME:
         previous_state = state;
         next_state = UpdateHome();
