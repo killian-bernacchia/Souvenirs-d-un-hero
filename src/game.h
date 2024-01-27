@@ -39,6 +39,5 @@ extern State UpdateCinematics(void);
 extern void DrawCinematics(void);
 
 extern bool game_over;
-extern Music current_music;
 
 #endif

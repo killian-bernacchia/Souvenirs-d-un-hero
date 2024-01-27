@@ -23,14 +23,10 @@ int main()
 
     SetExitKey(0);              
 
-    current_music = LoadMusicStream("resources/eq2-pantheon.wav");
-    PlayMusicStream(current_music);
-
     // Main game loop
     while (!WindowShouldClose() && exitGame != false )    // Detect window close button or ESC key
     {  
         game();
-        UpdateMusicStream(current_music);
     }
 
     // De-Initialization
