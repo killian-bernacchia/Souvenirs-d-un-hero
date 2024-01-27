@@ -14,6 +14,8 @@ int main()
 {
     // Initialization
     //--------------------------------------------------------------------------------------
+    SetConfigFlags(FLAG_WINDOW_ALWAYS_RUN);
+    SetConfigFlags(FLAG_FULLSCREEN_MODE);
     InitWindow(screenWidth, screenHeight, "Souvenirs d'un héro");
 
     InitAudioDevice();
@@ -26,6 +28,14 @@ int main()
     // Main game loop
     while (!WindowShouldClose() && exitGame != false )    // Detect window close button or ESC key
     {  
+        if(IsKeyPressed(KEY_F11))
+        {
+            ToggleFullscreen();
+        }
+        if(IsKeyPressed(KEY_ESCAPE) && IsWindowFullscreen())
+        {
+            ToggleFullscreen();
+        }
         game();
     }
 
