@@ -135,7 +135,7 @@ Scene UpdatePlatformer(void)
     if(!setted)
     {
         InitParallax();
-        player.position = (Vector2){ TILE_SIZE/2, -8*TILE_SIZE };
+        player.position = (Vector2){ TILE_SIZE/2, -4*TILE_SIZE };
         player.camera.target = player.position;
         delta_t = 0.0f;        
         setted = true;
