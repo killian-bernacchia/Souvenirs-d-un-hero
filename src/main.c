@@ -32,10 +32,6 @@ int main()
         {
             ToggleFullscreen();
         }
-        if(IsKeyPressed(KEY_ESCAPE) && IsWindowFullscreen())
-        {
-            ToggleFullscreen();
-        }
         game();
     }
 
