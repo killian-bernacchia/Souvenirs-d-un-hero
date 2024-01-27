@@ -31,7 +31,7 @@ COMPILER_PATH      ?= C:/raylib/w64devkit/bin
 BUILD_MODE         ?= RELEASE #DEBUG
 EXT				   ?= .exe
 PLATFORM           ?= PLATFORM_DESKTOP
-EXTRA			   ?= 
+EXTRA			   ?= #-Wl,--subsystem,windows
 # One of PLATFORM_DESKTOP, PLATFORM_RPI, PLATFORM_ANDROID, PLATFORM_WEB
 
 DESTDIR ?= /usr/local
